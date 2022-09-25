@@ -31,13 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "calc.apps.CalcConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "calc",
+     "demo",
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,15 @@ WSGI_APPLICATION = "demo.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": 'django',
+        "HOST": '127.0.0.1',
+        "USER":'root',
+        "PASSWORD":'',
+        "PORT":'3306',
+        "OPTIONS":{
+            'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
@@ -93,6 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
+
 
 
 # Internationalization
