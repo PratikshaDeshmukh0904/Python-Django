@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+
+<div class="container my-4">
+<table class="table table-striped">
+  <h3 class="text-centers">All Contact</h3>
+  <thead>
+    <tr>
+      <th scope="col">Sno</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">DOB</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in  contact_data %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{ i.name}}</td>
+      <td>{{i.email}} </td>
+      <td>{{i.mobile}} </td>
+      <td>{{i.dateofbirth}}</td>
+      <td>
+        <a  class="btn btn-primary btn-sm" href="edit_contact/{{i.sno}}" >Edit</a>
+        <a  class="btn btn-danger btn-sm" href="delete_contact/{{i.sno}}" >Delate</a>
+
+      </td>
+    </tr>
+    {% endfor %}
+ 
+  </tbody>
+</table>
+</div>
+  
+{% endblock body %}

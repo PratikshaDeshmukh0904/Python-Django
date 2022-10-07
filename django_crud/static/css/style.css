@@ -1,0 +1,30 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    /* align-items: center; */
+    margin-top: 25px;
+}
+a {
+    color: white;
+}
+button{
+    border: 1px solid black;
+    padding: 10px;
+    background-color: black;
+    color: white;
+}
+hr {
+    /* position: relative; */
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+    
+    
+}
+h1 {
+    font-size: 30px;
+    text-align: center;
+    margin: 15px ;
+}

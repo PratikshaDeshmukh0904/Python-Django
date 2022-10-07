@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+
+
+{% block body %}
+<div class="container my-4">
+  <h3 class="text-centers">Edit Contact</h3>
+    <form action="/update/{{edit_contact.sno}}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" name="name" value="{{edit_contact.name}}">
+          
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{edit_contact.email}}">
+        </div>
+        <div class="mb-3">
+          <label for="mobile" class="form-label">Mobile</label>
+          <input type="tel" class="form-control" id="mobile" name="mobile" value="{{edit_contact.mobile}}">
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">D O B</label>
+            <input type="text" class="form-control" name="dob" value="{{edit_contact.dateofbirth}}">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+
+{% endblock body %}

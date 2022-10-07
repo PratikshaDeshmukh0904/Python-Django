@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+nav{
+    display: flex;
+}
+nav ul {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    background-color: black;
+}
+nav ul li {
+    list-style: none;
+    padding: 30px ;
+    color: white;
+}
+.logo {
+    font-size: 25px;
+    text-transform: uppercase;
+}
+.nav-item{
+    font-size: 20px;
+    margin-left: 30px;
+}
+.add-contact{
+    position: absolute;
+    padding-top : 25px;
+    padding-left: 20px;
+}
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
