@@ -6,7 +6,9 @@ from django.template import loader
 from xml.dom.minidom import Identified
 
 from django.contrib import messages
-from .models import addcategory
+from .models import addcategory,addproduct
+
+from django.core.files.storage import FileSystemStorage
 
 
 from django.urls import reverse
@@ -59,6 +61,7 @@ def dologin(request):
 def admindashboard(request):
     return render(request,'admindashboard.html')
 
+#Add Category
 def addCategory(request):
     if request.method == 'POST':
         Category = request.POST['category']
@@ -77,11 +80,12 @@ def viewcategorydata(request):
         }  
     return render(request,"categoryView.html",context)  
 
+#Delete Category
 def delete_category(request,id):
     delete_contact = addcategory.objects.get(id=id)
     print("ID",id)
     delete_contact.delete()
-    messages.error(request , "branch deleted")
+    messages.error(request , "category deleted")
     return redirect("viewcategorydata")
 
 def update(request, id):
@@ -92,15 +96,78 @@ def update(request, id):
   }
   return HttpResponse(template.render(context, request))
 
+#Update Record
 def updaterecord(request,id):
     category = request.POST['category']
-
     member = addcategory.objects.get(id=id)
     member.category = category
-  
     member.save()
     messages.success(request,"Product Category Updated")
     return HttpResponseRedirect(reverse('viewcategorydata'))
 
-# def updatecategory(request):
-#     return render(request,'updatecategory.html')
+#Add Products 
+def  addProducts(request):
+    category_info = addcategory.objects.all().values()
+    print(category_info,type(category_info))
+    context = {
+        "category_info" : category_info,
+    }    
+    if request.method == 'POST' and request.FILES['upload']:
+        
+        upload = request.FILES['upload']
+        fss = FileSystemStorage()
+        file = fss.save(upload.name, upload)
+        file_url = fss.url(file)
+        ProductName = request.POST['pname']
+        ProductPrice = request.POST['pprice']
+        Category = request.POST['category']
+        Features = request.POST['features']
+        print(Category)
+        addCategory_data=addproduct(productname=ProductName,productprice=ProductPrice,category=Category,features=Features,product_Img=upload)
+        addCategory_data.save()
+        messages.success(request,"Product Submitted")
+        return render(request, 'addproduct.html', {'file_url': file_url})
+    return render(request,'addproduct.html',context)
+
+#Product View
+def viewproductdata(request):
+    product_info = addproduct.objects.all().values()
+    print(product_info,type(product_info))
+    context = {
+        "product_info" : product_info,
+        }  
+    return render(request,"productsview.html",context)  
+
+#Delete Product
+def delete_product(request,id):
+    delete_p = addproduct.objects.get(pid=id)#database column=whatever you want
+    print("ID",id)
+    delete_p.delete()
+    messages.error(request , "product deleted")
+    return redirect("viewproductdata")
+
+
+def updateproduct(request,id):
+  myproducts = addproduct.objects.get(pid=id)
+  template = loader.get_template('updateproducts.html')
+  context = {
+    'myproducts': myproducts,
+  }
+  return HttpResponse(template.render(context, request))
+
+#Update Record
+def updateproductrecord(request,id):
+    ProductName = request.POST['pname']
+    ProductPrice = request.POST['pprice']
+    Category = request.POST['category']
+    Features = request.POST['features']
+    Image = request.POST['upload']
+    member = addproduct.objects.get(pid=id)
+    member.productname = ProductName
+    member.productprice = ProductPrice
+    member.category = Category
+    member.features = Features
+    member.product_Img = Image
+    member.save()
+    messages.success(request,"Product Updated")
+    return HttpResponseRedirect(reverse('viewproductdata'))
